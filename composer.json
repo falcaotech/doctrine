@@ -3,6 +3,7 @@
         "silex/silex": "~1.2"
     },
     "require-dev": {
+        "fzaninotto/faker" : "~1.4",
         "phpunit/phpunit": "~4.3"
     },
     "autoload": {

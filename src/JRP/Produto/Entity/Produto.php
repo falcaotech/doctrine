@@ -3,6 +3,8 @@
 namespace JRP\Produto\Entity;
 
 
+use Psr\Log\InvalidArgumentException;
+
 class Produto {
     private $id;
     private $nome;
@@ -38,6 +40,11 @@ class Produto {
      */
     public function setId($id)
     {
+        if(!is_int($id))
+        {
+            throw new InvalidArgumentException("O ID do produto deve ser numérico!");
+        }
+
         $this->id = $id;
     }
 
@@ -54,6 +61,11 @@ class Produto {
      */
     public function setNome($nome)
     {
+        if(empty($nome))
+        {
+            throw new InvalidArgumentException("O nome do produto não pode ser vazio!");
+        }
+
         $this->nome = $nome;
     }
 
@@ -70,6 +82,11 @@ class Produto {
      */
     public function setValor($valor)
     {
+        if(!is_numeric($valor))
+        {
+            throw new InvalidArgumentException("O valor do produto deve ser numérico!");
+        }
+
         $this->valor = $valor;
     }
 

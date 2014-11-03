@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: juninho
- * Date: 02/11/14
- * Time: 23:48
- */
 
 namespace JRP\Interfaces;
 
 
+use Aura\Di\Container;
+
 interface MapperInterface {
+
+    public function __construct(Container $diC);
 
 } 

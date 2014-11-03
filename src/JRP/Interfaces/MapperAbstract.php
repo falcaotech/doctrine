@@ -1,14 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: juninho
- * Date: 02/11/14
- * Time: 23:44
- */
 
 namespace JRP\Interfaces;
 
 
-class MapperAbstract {
+use Aura\Di\Container;
 
-} 
+abstract class MapperAbstract implements MapperInterface {
+
+    protected $conn;
+
+    public function __construct(Container $diC)
+    {
+        $this->setConn($diC->get('db.conn'));
+    }
+
+    private function setConn(\PDO $pdo)
+    {
+        $this->conn = $pdo;
+    }
+
+}

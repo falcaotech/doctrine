@@ -3,7 +3,8 @@
         "bin-dir": "bin/"
     },
     "require": {
-        "silex/silex": "~1.2"
+        "silex/silex": "~1.2",
+        "aura/di": "*"
     },
     "require-dev": {
         "fzaninotto/faker" : "~1.4",

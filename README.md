@@ -20,12 +20,14 @@ php composer.phar install
 
 Parâmetros para conexão com o banco de dados
 ==========================================
-Os parâmetros para conexão com o banco de dados devem ser alterados no arquivo 'bootstrap.php'
+Os parâmetros para conexão com o banco de dados devem ser alterados no arquivo 'bootstrap.php
 
 Utilização
 ===========
 
 ```
+cd silexapp/
+php fixtures.php
 php -S 0.0.0.0:8888 -t web/
 ```
 

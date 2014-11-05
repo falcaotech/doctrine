@@ -1,14 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: juninho
- * Date: 03/11/14
- * Time: 20:42
- */
 
 namespace JRP\Application;
 
+use \Silex\Application;
 
-class App {
+class App extends Application {
+
+    public function __construct(array $config = array())
+    {
+        parent::__construct($config);
+    }
 
 } 

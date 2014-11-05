@@ -7,9 +7,15 @@ use JRP\Produto\Entity\Produto;
 
 class ProdutoMapper extends MapperAbstract {
 
-    public function read()
+    public function read($id = null)
     {
         $sql = "SELECT * FROM produtos";
+
+        if(!is_null($id) && is_numeric($id))
+        {
+            $sql .= " WHERE id = {$id}";
+        }
+
         $stmt = $this->conn->query($sql);
 
         return $stmt->fetchAll();
@@ -19,11 +25,16 @@ class ProdutoMapper extends MapperAbstract {
     {
         $sql = "INSERT INTO produtos (nome, descricao, valor) VALUES (:nome, :descricao, :valor)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue("nome", $produto->getNome(), PDO::PARAM_STR);
-        $stmt->bindValue("descricao", $produto->getDescricao(), PDO::PARAM_STR);
-        $stmt->bindValue("valor", $produto->getValor(), PDO::PARAM_STR);
+        $stmt->bindValue("nome", $produto->getNome(), \PDO::PARAM_STR);
+        $stmt->bindValue("descricao", $produto->getDescricao(), \PDO::PARAM_STR);
+        $stmt->bindValue("valor", $produto->getValor(), \PDO::PARAM_STR);
 
-        return $stmt->execute();
+        if($stmt->execute())
+        {
+            return $this->read($this->conn->lastInsertId());
+        }
+
+        return false;
     }
 
     public function update(Produto $produto)
@@ -44,6 +55,11 @@ class ProdutoMapper extends MapperAbstract {
         $stmt = $this->conn->prepare($sql);
 
         return $stmt->execute(array($produto->getId()));
+    }
+
+    public function count($id = null)
+    {
+        return count($this->read($id));
     }
 
 } 

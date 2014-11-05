@@ -11,15 +11,11 @@ $db = new Db("mysql:host=localhost;dbname=soa", "root", "82214290");
 
 $di->set('db.conn', $db->getConn());
 
-$app = new Silex\Application(array('debug' => true));
+$app = new \JRP\Application\App(array('debug' => true));
 
-$produtoMapper = new \JRP\Produto\Mapper\ProdutoMapper($di);
+$app['produtoService'] = function() use ($di){
+    $produtoMapper = new \JRP\Produto\Mapper\ProdutoMapper($di);
+    $produtoService = new \JRP\Produto\Service\ProdutoService($produtoMapper, new \JRP\Produto\Entity\Produto());
 
-$produto = new \JRP\Produto\Entity\Produto();
-$produto->setId(1);
-$produto->setNome('teste');
-$produto->setValor(100);
-
-var_dump($produtoMapper->update($produto));
-
-var_dump($produtoMapper->delete($produto));
+    return $produtoService;
+};

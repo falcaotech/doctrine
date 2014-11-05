@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Alterar os parâmetros para conexão no arquivo boostrap.php
+ */
+
 require 'bootstrap.php';
 
 $dbh = $db->getConn();

@@ -2,7 +2,7 @@
 
 {% block conteudo %}
         {% if produtos|length > 0 %}
-            <table class="table table-hover">
+            <table id="table-produtos" class="table table-hover">
             <thead>
             <tr>
                 <th>ID</th>
@@ -47,4 +47,8 @@
         {% else %}
             Nenhum produto cadastrado no banco de dados!
         {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    <script src="js/produto-listagem.js"></script>
 {% endblock %}

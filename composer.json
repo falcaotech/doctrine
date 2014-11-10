@@ -4,10 +4,11 @@
     },
     "require": {
         "silex/silex": "~1.2",
-        "aura/di": "*"
+        "aura/di": "*",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "~2.3"
     },
     "require-dev": {
-        "fzaninotto/faker" : "~1.4",
         "phpunit/phpunit": "~4.3"
     },
     "autoload": {

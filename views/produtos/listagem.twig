@@ -2,6 +2,7 @@
 
 {% block conteudo %}
         {% if produtos|length > 0 %}
+            {% include 'produtos/modal/cadastrar.twig' %}
             <table id="table-produtos">
             <thead>
             <tr>
@@ -19,9 +20,9 @@
                 <th></th>
                 <th></th>
                 <th>
-                    <a href="{{ path('produto-cadastrar') }}" class="btn btn-primary btn-sm pull-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
                         <span class="glyphicon glyphicon-plus"></span> Novo produto
-                    </a>
+                    </button>
                 </th>
             </tr>
             </tfoot>

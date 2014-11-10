@@ -2,17 +2,43 @@
 <head>
     <title>Silex</title>
 
-    <link rel="stylesheet" href="lib/Bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/Bootstrap/css/bootstrap-theme.min.css">
-    <script src="lib/Bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="/lib/Bootstrap/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="lib/DataTable/css/jquery.dataTables.min.css">
-    <script src="lib/DataTable/js/jquery.js"></script>
-    <script src="lib/DataTable/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
+    <script src="/lib/DataTable/js/jquery.js"></script>
+    <script src="/lib/DataTable/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 </head>
 <body>
-    <div class="container">
-        {% block conteudo %}{% endblock %}
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">SOA</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="#">Produtos</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                {% block conteudo %}{% endblock %}
+            </div>
+        </div>
     </div>
 
     {% block javascript %}

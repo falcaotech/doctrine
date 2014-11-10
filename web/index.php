@@ -2,6 +2,10 @@
 
 require_once '../bootstrap.php';
 
+$app->error(function (\Exception $e, $code) use($app) {
+    return $app->json(array("success" => false, "msg" => $e->getMessage()),$code);
+});
+
 $app->get('/', function() use ($app)
 {
     return $app->redirect($app['url_generator']->generate('produtos'));
@@ -14,21 +18,16 @@ $app->get('/produtos', function() use ($app)
     return $app['twig']->render('produtos/listagem.twig', ['produtos' => $produtos]);
 })->bind('produtos');
 
-$app->get('/produto/cadastrar', function() use($app)
-{
-    return $app['twig']->render('produtos/cadastrar.twig');
-})->bind('produto-cadastrar');
-
 $app->post('/produto/cadastrar', function(\Symfony\Component\HttpFoundation\Request $request) use ($app)
 {
     $dados = $request->request->all();
 
     if($app['produtoService']->insert($dados))
     {
-        return $app->redirect($app['url_generator']->generate('produtos'));
+        return $app->json(['success' => true, 'msg' => 'Produto cadastrado com sucesso!']);
     }
 
-    return "Erro ao cadastrar produto!";
+    return $app->json(['success' => false, 'msg' => 'Erro ao cadastrar produto!'], 400);
 });
 
 $app->get('/produto/editar/{id}', function($id) use ($app)

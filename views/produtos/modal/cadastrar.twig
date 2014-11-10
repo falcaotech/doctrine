@@ -2,12 +2,11 @@
 
 {% block title %}Cadastrar produto{% endblock %}
 {% block content %}
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" id="form-produto-cadastrar" method="post">
     <fieldset>
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="nome">Nome</label>
-            <div class="col-md-4">
+            <div class="col-xs-12">
                 <input id="nome" name="nome" type="text" placeholder="Ex: Computador" class="form-control input-md" required="">
                 <span class="help-block">Nome do produto</span>
             </div>
@@ -15,16 +14,14 @@
 
         <!-- Textarea -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="descricao">Descrição do produto</label>
-            <div class="col-md-4">
-                <textarea class="form-control" id="descricao" name="descricao"></textarea>
+            <div class="col-xs-12">
+                <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição"></textarea>
             </div>
         </div>
 
         <!-- Prepended text-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="valor">Valor</label>
-            <div class="col-md-4">
+            <div class="col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon">R$</span>
                     <input id="valor" name="valor" class="form-control" placeholder="1,99" type="text" required="">
@@ -37,5 +34,5 @@
 {% endblock %}
 {% block footer %}
 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-<button type="button" class="btn btn-primary">Cadastrar</button>
+<button type="button" class="btn btn-primary" id="btn-produto-cadastrar">Cadastrar</button>
 {% endblock  %}

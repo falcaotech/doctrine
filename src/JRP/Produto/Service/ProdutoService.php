@@ -39,4 +39,13 @@ class ProdutoService {
         return $this->produtoMapper->insert($this->produto);
     }
 
+    public function delete($id)
+    {
+        $id = (int) $id;
+
+        $this->produto->setId($id);
+
+        return $this->produtoMapper->delete($this->produto);
+    }
+
 } 

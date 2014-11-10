@@ -4,6 +4,32 @@ $(document).ready( function () {
             "url": "/produtos/listagem",
             "dataSrc": ""
         },
+        "columns": [
+            { "data": "id" },
+            { "data": "nome" },
+            { "data": "descricao" },
+            { "data": "valor" },
+            { "data": "" }
+        ],
+        "columnDefs": [
+            {
+                "type": "html",
+                "targets": 3 ,
+                "render": function(data, type, row)
+                {
+                    return "R$ " + data.replace(".", ",");
+                }
+            },
+            {
+                "type": "html",
+                "targets": 4 ,
+                "render": function(data, type, row)
+                {
+                    return '<a href="" class="btn btn-default" style="margin-right: 5px;"><span class="glyphicon glyphicon-edit"></span> Editar</a>' +
+                        '<a href="/produto/excluir/" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a>';
+                }
+            }
+        ],
         language : {
             sEmptyTable: "Nenhum registro encontrado",
             sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",

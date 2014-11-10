@@ -18,7 +18,7 @@ class ProdutoMapper extends MapperAbstract {
 
         $stmt = $this->conn->query($sql);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function insert(Produto $produto)

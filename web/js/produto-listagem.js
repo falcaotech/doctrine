@@ -1,5 +1,9 @@
 $(document).ready( function () {
     $('#table-produtos').DataTable({
+        ajax: {
+            "url": "/produtos/listagem",
+            "dataSrc": ""
+        },
         language : {
             sEmptyTable: "Nenhum registro encontrado",
             sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",

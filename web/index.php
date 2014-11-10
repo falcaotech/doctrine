@@ -18,6 +18,13 @@ $app->get('/produtos', function() use ($app)
     return $app['twig']->render('produtos/listagem.twig', ['produtos' => $produtos]);
 })->bind('produtos');
 
+$app->get('/produtos/listagem', function() use ($app)
+{
+    $produtos = $app['produtoService']->read();
+
+    return $app->json($produtos);
+});
+
 $app->post('/produto/cadastrar', function(\Symfony\Component\HttpFoundation\Request $request) use ($app)
 {
     $dados = $request->request->all();

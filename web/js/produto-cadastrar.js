@@ -21,6 +21,8 @@ $('#btn-produto-cadastrar').click(function(e){
         success: function(data, status, xhr)
         {
             $('#modal').modal('hide');
+
+            location.reload();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             data = JSON.parse(XMLHttpRequest.responseText);

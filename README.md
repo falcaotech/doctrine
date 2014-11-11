@@ -30,9 +30,3 @@ cd silexapp/
 php fixtures.php
 php -S 0.0.0.0:8888 -t web/
 ```
-
-Rotas
-===============================
-
-- Listagem dos produtos -> /produto/listagem
-- Inserção dos produtos -> /produto/inserir/nome/descricao/valor

@@ -1,5 +1,7 @@
 {% extends 'layout.twig' %}
 
+{% block header %}Produtos{% endblock %}
+{% block subheader %} Listagem{% endblock %}
 {% block conteudo %}
         {% if produtos|length > 0 %}
             {% include 'produtos/modal/cadastrar.twig' %}

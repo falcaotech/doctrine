@@ -52,6 +52,17 @@ class ProdutoService {
         return $this->produtoMapper->update($this->produto);
     }
 
+    public function updateColumn(array $data = array())
+    {
+        $params = [
+            'id' => $data['pk'],
+            'column' => $data['name'],
+            'value' => $data['value']
+        ];
+
+        return $this->produtoMapper->updateColumn($params);
+    }
+
     public function delete($id)
     {
         $id = (int) $id;

@@ -39,10 +39,6 @@ class ProdutoMapper extends MapperAbstract {
 
     public function update(Produto $produto)
     {
-        $data = $this->read($produto->getId());
-
-        var_dump($data);
-
         $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue("id", $produto->getId());
@@ -51,6 +47,22 @@ class ProdutoMapper extends MapperAbstract {
         $stmt->bindValue("valor", $produto->getValor(), \PDO::PARAM_STR);
 
         return $stmt->execute();
+    }
+
+    public function updateColumn(array $data = array())
+    {
+        $id = $data['id'];
+        $column = $data['column'];
+        $value = $data['value'];
+
+        $sql = "UPDATE produtos SET {$column} = :valor WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue("valor", $value, \PDO::PARAM_STR);
+        $stmt->bindValue("id", $id, \PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->rowCount();
     }
 
     public function delete(Produto $produto)

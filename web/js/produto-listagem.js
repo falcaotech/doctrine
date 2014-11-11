@@ -14,10 +14,24 @@ $(document).ready( function () {
         "columnDefs": [
             {
                 "type": "html",
+                "targets": 1,
+                "render": function(data, type, row) {
+                    return '<a href="#" class="editable-field" id="nome" data-type="text" data-pk="' + row.id + '" data-title="Nome">' + row.nome + '</a>';
+                }
+            },
+            {
+                "type": "html",
+                "targets": 2,
+                "render": function(data, type, row) {
+                    return '<a href="#" class="editable-field" id="descricao" data-type="textarea" data-pk="' + row.id + '" data-title="Descrição">' + row.descricao + '</a>';
+                }
+            },
+            {
+                "type": "html",
                 "targets": 3 ,
                 "render": function(data, type, row)
                 {
-                    return "R$ " + data.replace(".", ",");
+                    return 'R$ <a href="#" class="editable-field-money mask-money" id="valor" data-type="text" data-pk="' + row.id + '" data-title="Valor">' + row.valor.replace(".", ",") + '</a>';
                 }
             },
             {
@@ -25,11 +39,22 @@ $(document).ready( function () {
                 "targets": 4 ,
                 "render": function(data, type, row)
                 {
-                    return '<a href="" class="btn btn-default" style="margin-right: 5px;"><span class="glyphicon glyphicon-edit"></span> Editar</a>' +
-                        '<a href="/produto/excluir/" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a>';
+                    return '<a href="/produto/excluir/' + row.id + '" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a>';
                 }
             }
         ],
+        "fnDrawCallback": function()
+        {
+            $.fn.editable.defaults.url = '/produto/atualizar';
+
+            $('.editable-field').editable();
+
+            $('.editable-field-money').editable({
+                type: 'text',
+                name: 'valor',
+                tpl: '<input type="text" id ="valor" class="mask-money form-control input-sm">'
+            });
+        },
         language : {
             sEmptyTable: "Nenhum registro encontrado",
             sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",

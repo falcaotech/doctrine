@@ -32,6 +32,12 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="js/mask-money.js"></script>
     <script src="js/produto-listagem.js"></script>
     <script src="js/produto-cadastrar.js"></script>
+    <script>
+        $(document).on("focus", ".mask-money", function () {
+            $(this).maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+        });
+    </script>
 {% endblock %}

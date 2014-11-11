@@ -39,6 +39,10 @@ class ProdutoMapper extends MapperAbstract {
 
     public function update(Produto $produto)
     {
+        $data = $this->read($produto->getId());
+
+        var_dump($data);
+
         $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue("id", $produto->getId());

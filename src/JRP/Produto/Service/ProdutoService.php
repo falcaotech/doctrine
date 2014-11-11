@@ -29,7 +29,7 @@ class ProdutoService {
     public function insert(array $data = array())
     {
         $nome = $data['nome'];
-        $valor = $data['valor'];
+        $valor = floatval(str_replace(',', '.', $data['valor']));
         $descricao = $data['descricao'];
 
         $this->produto->setNome($nome);
@@ -37,6 +37,19 @@ class ProdutoService {
         $this->produto->setDescricao($descricao);
 
         return $this->produtoMapper->insert($this->produto);
+    }
+
+    public function update(array $data = array())
+    {
+        $nome = $data['nome'];
+        $valor = floatval(str_replace(',', '.', $data['valor']));
+        $descricao = $data['descricao'];
+
+        $this->produto->setNome($nome);
+        $this->produto->setValor($valor);
+        $this->produto->setDescricao($descricao);
+
+        return $this->produtoMapper->update($this->produto);
     }
 
     public function delete($id)

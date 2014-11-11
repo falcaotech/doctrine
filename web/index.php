@@ -37,10 +37,17 @@ $app->post('/produto/cadastrar', function(\Symfony\Component\HttpFoundation\Requ
     return $app->json(['success' => false, 'msg' => 'Erro ao cadastrar produto!'], 400);
 });
 
-$app->get('/produto/editar/{id}', function($id) use ($app)
+$app->post('/produto/atualizar', function(\Symfony\Component\HttpFoundation\Request $request) use ($app)
 {
-    return 'editar';
-})->bind('produto-editar');
+    $dados = $request->request->all();
+
+    if($app['produtoService']->update($dados))
+    {
+        return 'ok';
+    }
+
+    return 'erro';
+});
 
 $app->get('/produto/excluir/{id}', function($id) use ($app)
 {

@@ -14,7 +14,7 @@ $di->set('db.conn', $db->getConn());
 $app = new \JRP\Application\App(array('debug' => true));
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
+    'twig.path' => __DIR__.'/src/JRP/Views/',
 ));
 
 $app->register(new \Silex\Provider\UrlGeneratorServiceProvider());

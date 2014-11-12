@@ -37,7 +37,7 @@ API Rest
 ```
 GET - http://0.0.0.0:8888/produtos -> Lista todos os produtos
 GET - http://0.0.0.0:8888/produtos/id -> Lista um produto de determinado ID
-POST - http://0.0.0.0:8888/produtos -> Insere produto no banco de dados (nome, descricao, valor
+POST - http://0.0.0.0:8888/produtos -> Insere produto no banco de dados (nome, descricao, valor)
 PUT - http://0.0.0.0:8888/produtos -> Altera um determinado produto no banco de dados (id)
 DELETE - http://0.0.0.0:8888/produtos/id -> Deleta um produto de determinado ID
 ```

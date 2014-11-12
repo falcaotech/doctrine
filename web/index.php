@@ -25,7 +25,7 @@ $app->get('/produtos/listagem', function() use ($app)
     return $app->json($produtos);
 });
 
-$app->post('/produto/cadastrar', function(\Symfony\Component\HttpFoundation\Request $request) use ($app)
+$app->post('/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app)
 {
     $dados = $request->request->all();
 

@@ -41,10 +41,12 @@ class ProdutoService {
 
     public function update(array $data = array())
     {
+        $id = (int) $data['id'];
         $nome = $data['nome'];
         $valor = floatval(str_replace(',', '.', $data['valor']));
         $descricao = $data['descricao'];
 
+        $this->produto->setId($id);
         $this->produto->setNome($nome);
         $this->produto->setValor($valor);
         $this->produto->setDescricao($descricao);
@@ -63,9 +65,9 @@ class ProdutoService {
         return $this->produtoMapper->updateColumn($params);
     }
 
-    public function delete($id)
+    public function delete(array $data = array())
     {
-        $id = (int) $id;
+        $id = (int) $data['id'];
 
         $this->produto->setId($id);
 

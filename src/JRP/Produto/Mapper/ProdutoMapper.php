@@ -31,7 +31,7 @@ class ProdutoMapper extends MapperAbstract {
 
         if($stmt->execute())
         {
-            return $this->read($this->conn->lastInsertId());
+            return $this->conn->lastInsertId();
         }
 
         return false;
@@ -70,7 +70,14 @@ class ProdutoMapper extends MapperAbstract {
         $sql = "DELETE FROM produtos WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
 
-        return $stmt->execute(array($produto->getId()));
+        $data = [$produto->getId()];
+
+        if($stmt->execute($data))
+        {
+            return $stmt->rowCount();
+        }
+
+        return false;
     }
 
     public function count($id = null)

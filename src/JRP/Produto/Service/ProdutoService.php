@@ -65,9 +65,9 @@ class ProdutoService {
         return $this->produtoMapper->updateColumn($params);
     }
 
-    public function delete(array $data = array())
+    public function delete($id)
     {
-        $id = (int) $data['id'];
+        $id = (int) $id;
 
         $this->produto->setId($id);
 

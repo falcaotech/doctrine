@@ -51,11 +51,9 @@ $app->put('/api/produtos', function(\Symfony\Component\HttpFoundation\Request $r
     return $app->json(['success' => false, 'msg' => 'Erro ao cadastrar produto!'], 400);
 });
 
-$app->delete('/api/produtos', function (\Symfony\Component\HttpFoundation\Request $request) use ($app)
+$app->delete('/api/produtos/{id}', function ($id) use ($app)
 {
-    $dados = $request->request->all();
-
-    if($app['produtoService']->delete($dados)) {
+    if($app['produtoService']->delete($id)) {
         return $app->json(['success' => true, 'msg' => 'Produto excluído com sucesso!']);
     }
 
@@ -103,7 +101,7 @@ $app->post('/produto/atualizar', function(\Symfony\Component\HttpFoundation\Requ
 
 $app->get('/produto/excluir/{id}', function($id) use ($app)
 {
-    if($app['produtoService']->delete(['id' => $id])) {
+    if($app['produtoService']->delete($id)) {
         return $app->redirect($app['url_generator']->generate('produtos'));
     }
 })->bind('produto-excluir');

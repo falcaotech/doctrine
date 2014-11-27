@@ -39,13 +39,13 @@ $(document).ready( function () {
                 "targets": 4 ,
                 "render": function(data, type, row)
                 {
-                    return '<a href="/produto/excluir/' + row.id + '" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a>';
+                    return '<a href="/produtos/excluir/' + row.id + '" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a>';
                 }
             }
         ],
         "fnDrawCallback": function()
         {
-            $.fn.editable.defaults.url = '/produto/atualizar';
+            $.fn.editable.defaults.url = '/produtos/atualizar';
 
             $('.editable-field').editable();
 

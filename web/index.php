@@ -13,21 +13,23 @@ $app->get('/', function() use ($app)
 
 /* API REST - Start */
 
-$app->get('/api/produtos', function() use ($app)
+$apiRest = $app['controllers_factory'];
+
+$apiRest->get('/produtos', function() use ($app)
 {
     $produtos = $app['produtoService']->read();
 
     return $app->json($produtos);
 });
 
-$app->get('/api/produtos/{id}', function($id) use ($app)
+$apiRest->get('/produtos/{id}', function($id) use ($app)
 {
     $produto = $app['produtoService']->read($id);
 
     return $app->json($produto);
 });
 
-$app->post('/api/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app){
+$apiRest->post('/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app){
     $dados = $request->request->all();
 
     $result = $app['produtoService']->insert($dados);
@@ -40,7 +42,7 @@ $app->post('/api/produtos', function(\Symfony\Component\HttpFoundation\Request $
     return $app->json(['success' => false, 'msg' => 'Erro ao inserir produto!'], 400);
 });
 
-$app->put('/api/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app){
+$apiRest->put('/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app){
     $dados = $request->request->all();
 
     if($app['produtoService']->update($dados))
@@ -51,7 +53,7 @@ $app->put('/api/produtos', function(\Symfony\Component\HttpFoundation\Request $r
     return $app->json(['success' => false, 'msg' => 'Erro ao cadastrar produto!'], 400);
 });
 
-$app->delete('/api/produtos/{id}', function ($id) use ($app)
+$apiRest->delete('/produtos/{id}', function ($id) use ($app)
 {
     if($app['produtoService']->delete($id)) {
         return $app->json(['success' => true, 'msg' => 'Produto excluído com sucesso!']);
@@ -106,4 +108,5 @@ $app->get('/produto/excluir/{id}', function($id) use ($app)
     }
 })->bind('produto-excluir');
 
+$app->mount('/api', $apiRest);
 $app->run();

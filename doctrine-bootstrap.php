@@ -9,15 +9,8 @@ define('DB_USER', 'root');
 define('DB_PASS', '82214290');
 define('DB_NAME', 'trilhando_doctrine');
 
-use Doctrine\ORM\Tools\Setup,
-    Doctrine\ORM\EntityManager,
-    Doctrine\Common\EventManager as EventManager,
-    Doctrine\ORM\Events,
-    Doctrine\ORM\Configuration,
-    Doctrine\Common\Cache\ArrayCache as Cache,
-    Doctrine\Common\Annotations\AnnotationRegistry,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\Common\ClassLoader;
+use Doctrine\ORM\EntityManager,
+    Doctrine\Common\Annotations\AnnotationRegistry;
 
 $cache = new Doctrine\Common\Cache\ArrayCache;
 $annotationReader = new Doctrine\Common\Annotations\AnnotationReader;

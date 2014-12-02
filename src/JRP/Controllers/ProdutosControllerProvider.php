@@ -31,12 +31,7 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
         {
             $dados = $request->request->all();
 
-            if($app['produtoService']->insert($dados))
-            {
-                return $app->json(['success' => true, 'msg' => 'Produto cadastrado com sucesso!']);
-            }
-
-            return $app->json(['success' => false, 'msg' => 'Erro ao cadastrar produto!'], 400);
+            return $app->json($app['produtoService']->insert($dados));
         });
 
         $controllers->get('/listagem', function() use ($app)
@@ -49,12 +44,7 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
         $controllers->post('/atualizar', function(\Symfony\Component\HttpFoundation\Request $request) use ($app) {
             $dados = $request->request->all();
 
-            if($app['produtoService']->updateColumn($dados))
-            {
-                return $app->json(['success' => true, 'msg' => 'Produto atualizado com sucesso!']);
-            }
-
-            return $app->json(['success' => false, 'msg' => 'Erro ao atualizar produto!'], 400);
+            return $app->json($app['produtoService']->updateColumn($dados));
         });
 
         $controllers->get('/excluir/{id}', function($id) use ($app)

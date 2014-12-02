@@ -29,21 +29,38 @@ class ProdutoMapper extends MapperAbstract {
             $this->em->persist($produto);
             $this->em->flush();
         } catch(Exception $error) {
-            return ['success' => false];
+            return [
+                'success' => false,
+                'msg' => 'Erro ao inserir produto!'
+            ];
         }
 
-        return $produto->getId();
+        return [
+            'success' => true,
+            'msg' => 'Produto inserido com sucesso!',
+            'produto' => [
+                'id' => $produto->getId()
+            ]
+        ];
     }
 
     public function update(Produto $produto)
     {
+        if(!$this->count($produto->getId()))
+        {
+            throw new Exception("Produto não encontrado!");
+        }
+
         $this->em->getConnection()->update('produtos', [
             'nome' => $produto->getNome(),
             'descricao' => $produto->getDescricao(),
             'valor' => $produto->getValor()
         ], ['id' => $produto->getId()]);
 
-        return true;
+        return [
+            'success' => true,
+            'msg' => 'Produto atualizado com sucesso!'
+        ];
     }
 
     public function updateColumn(array $data = array())
@@ -56,7 +73,12 @@ class ProdutoMapper extends MapperAbstract {
             $column => $value
         ], ['id' => $id]);
 
-        return $update;
+        if(!$update)
+        {
+            return ['success' => false];
+        }
+
+        return ['success' => true];
     }
 
     public function delete(Produto $produto)
@@ -71,7 +93,10 @@ class ProdutoMapper extends MapperAbstract {
         $this->em->remove($produto);
         $this->em->flush();
 
-        return ['success' => true];
+        return [
+            'success' => true,
+            'msg' => 'Produto excluído com sucesso!'
+        ];
     }
 
     public function count($id = null)

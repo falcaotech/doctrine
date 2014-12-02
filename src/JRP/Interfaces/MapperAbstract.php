@@ -2,21 +2,15 @@
 
 namespace JRP\Interfaces;
 
-
-use Aura\Di\Container;
+use Doctrine\ORM\EntityManager;
 
 abstract class MapperAbstract implements MapperInterface {
 
-    protected $conn;
+    protected  $em;
 
-    public function __construct(Container $diC)
+    public function __construct(EntityManager $em)
     {
-        $this->setConn($diC->get('db.conn'));
-    }
-
-    private function setConn(\PDO $pdo)
-    {
-        $this->conn = $pdo;
+        $this->em = $em;
     }
 
 }

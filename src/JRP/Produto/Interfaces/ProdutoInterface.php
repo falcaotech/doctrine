@@ -1,14 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: juninho
- * Date: 30/11/14
- * Time: 01:37
- */
 
 namespace JRP\Produto\Interfaces;
 
 
-class ProdutoInterface {
-
+interface ProdutoInterface {
+    public function setId($id);
+    public function setNome($nome);
+    public function setDescricao($descricao);
+    public function setValor($valor);
 } 

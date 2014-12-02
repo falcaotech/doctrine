@@ -2,11 +2,10 @@
 
 namespace JRP\Interfaces;
 
-
-use Aura\Di\Container;
+use Doctrine\ORM\EntityManager;
 
 interface MapperInterface {
 
-    public function __construct(Container $diC);
+    public function __construct(EntityManager $em);
 
 } 

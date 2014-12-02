@@ -4,49 +4,46 @@ namespace JRP\Produto\Mapper;
 
 use JRP\Interfaces\MapperAbstract;
 use JRP\Produto\Entity\Produto;
+use SebastianBergmann\Exporter\Exception;
 
 class ProdutoMapper extends MapperAbstract {
 
     public function read($id = null)
     {
-        $sql = "SELECT * FROM produtos";
+        $sql = "SELECT * FROM produtos" . (!is_null($id) ? " WHERE id = :id" : "");
+        $stmt = $this->em->getConnection()->prepare($sql);
 
-        if(!is_null($id) && is_numeric($id))
+        if(!is_null($id))
         {
-            $sql .= " WHERE id = {$id}";
+            $stmt->bindValue("id", $id, \PDO::PARAM_INT);
         }
 
-        $stmt = $this->conn->query($sql);
+        $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function insert(Produto $produto)
     {
-        $sql = "INSERT INTO produtos (nome, descricao, valor) VALUES (:nome, :descricao, :valor)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue("nome", $produto->getNome(), \PDO::PARAM_STR);
-        $stmt->bindValue("descricao", $produto->getDescricao(), \PDO::PARAM_STR);
-        $stmt->bindValue("valor", $produto->getValor(), \PDO::PARAM_STR);
-
-        if($stmt->execute())
-        {
-            return $this->conn->lastInsertId();
+        try {
+            $this->em->persist($produto);
+            $this->em->flush();
+        } catch(Exception $error) {
+            return ['success' => false];
         }
 
-        return false;
+        return $produto->getId();
     }
 
     public function update(Produto $produto)
     {
-        $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue("id", $produto->getId());
-        $stmt->bindValue("nome", $produto->getNome(), \PDO::PARAM_STR);
-        $stmt->bindValue("descricao", $produto->getDescricao(), \PDO::PARAM_STR);
-        $stmt->bindValue("valor", $produto->getValor(), \PDO::PARAM_STR);
+        $this->em->getConnection()->update('produtos', [
+            'nome' => $produto->getNome(),
+            'descricao' => $produto->getDescricao(),
+            'valor' => $produto->getValor()
+        ], ['id' => $produto->getId()]);
 
-        return $stmt->execute();
+        return true;
     }
 
     public function updateColumn(array $data = array())
@@ -55,29 +52,26 @@ class ProdutoMapper extends MapperAbstract {
         $column = $data['column'];
         $value = $data['value'];
 
-        $sql = "UPDATE produtos SET {$column} = :valor WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue("valor", $value, \PDO::PARAM_STR);
-        $stmt->bindValue("id", $id, \PDO::PARAM_INT);
+        $update = $this->em->getConnection()->update('produtos', [
+            $column => $value
+        ], ['id' => $id]);
 
-        $stmt->execute();
-
-        return $stmt->rowCount();
+        return $update;
     }
 
     public function delete(Produto $produto)
     {
-        $sql = "DELETE FROM produtos WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
+        $produto = $this->em->find(get_class($produto), $produto->getId());
 
-        $data = [$produto->getId()];
-
-        if($stmt->execute($data))
+        if(is_null($produto))
         {
-            return $stmt->rowCount();
+            throw new Exception("Nenhum produto encontrado com esse Id!");
         }
 
-        return false;
+        $this->em->remove($produto);
+        $this->em->flush();
+
+        return ['success' => true];
     }
 
     public function count($id = null)

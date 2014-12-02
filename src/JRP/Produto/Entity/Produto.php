@@ -3,12 +3,34 @@
 namespace JRP\Produto\Entity;
 
 
+use JRP\Produto\Interfaces\ProdutoInterface;
 use Psr\Log\InvalidArgumentException;
 
-class Produto {
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="produtos")
+ */
+
+class Produto implements ProdutoInterface {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
     private $id;
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
     private $nome;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $descricao;
+    /**
+     * @ORM\Column(type="float", scale=2)
+     */
     private $valor;
 
     /**

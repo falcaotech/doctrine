@@ -14,7 +14,7 @@ $('#btn-produto-cadastrar').click(function(e){
     e.preventDefault();
 
     $.ajax({
-        url: '/produtos',
+        url: '/api/produtos',
         data: $('#form-produto-cadastrar').serialize(),
         type: "POST",
         dataType: "json",

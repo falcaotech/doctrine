@@ -10,7 +10,7 @@ class App extends Application {
     {
         parent::__construct($config);
 
-        parent::error(function (\Exception $e, $code) use($app) {
+        parent::error(function (\Exception $e, $code) {
             return parent::json(array("error" => $e->getMessage()),$code);
         });
     }

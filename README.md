@@ -22,6 +22,7 @@ API Rest
 GET - http://0.0.0.0:8888/api/produtos -> Lista todos os produtos
 GET - http://0.0.0.0:8888/api/produtos/id -> Lista um produto de determinado ID
 POST - http://0.0.0.0:8888/api/produtos -> Insere produto no banco de dados (nome, descricao, valor)
+Atenção: O separador decimal é vírgula.
 PUT - http://0.0.0.0:8888/api/produtos -> Altera um determinado produto no banco de dados (id)
 DELETE - http://0.0.0.0:8888/api/produtos/id -> Deleta um produto de determinado ID
 ```

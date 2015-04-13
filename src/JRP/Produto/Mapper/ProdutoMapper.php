@@ -69,6 +69,13 @@ class ProdutoMapper extends MapperAbstract {
         $column = $data['column'];
         $value = $data['value'];
 
+        if($column == 'valor')
+        {
+            // Valor do produto
+            $value = str_replace('.', '', $value);
+            $value = floatval(str_replace(',', '.', $value));
+        }
+
         $update = $this->em->getConnection()->update('produtos', [
             $column => $value
         ], ['id' => $id]);

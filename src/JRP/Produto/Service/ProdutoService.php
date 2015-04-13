@@ -29,7 +29,8 @@ class ProdutoService {
     public function insert(array $data = array())
     {
         $nome = $data['nome'];
-        $valor = floatval(str_replace(',', '.', $data['valor']));
+        $valor = str_replace('.', '', $data['valor']);
+        $valor = floatval(str_replace(',', '.', $valor));
         $descricao = $data['descricao'];
 
         $this->produto->setNome($nome);

@@ -6,6 +6,7 @@ namespace JRP\Controllers;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ApiControllerProvider implements ControllerProviderInterface {
     /**
@@ -33,13 +34,13 @@ class ApiControllerProvider implements ControllerProviderInterface {
             return $app->json($produto);
         });
 
-        $controllers->post('/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app){
+        $controllers->post('/produtos', function(Request $request) use ($app){
             $dados = $request->request->all();
 
             return $app->json($app['produtoService']->insert($dados));
         });
 
-        $controllers->put('/produtos', function(\Symfony\Component\HttpFoundation\Request $request) use ($app){
+        $controllers->put('/produtos', function(Request $request) use ($app){
             $dados = $request->request->all();
 
             return $app->json($app['produtoService']->update($dados));

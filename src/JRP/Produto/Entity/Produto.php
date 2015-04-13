@@ -29,7 +29,7 @@ class Produto implements ProdutoInterface {
      */
     private $descricao;
     /**
-     * @ORM\Column(type="float", scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $valor;
 

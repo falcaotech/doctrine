@@ -4,23 +4,15 @@ namespace JRP\Produto\Mapper;
 
 use JRP\Interfaces\MapperAbstract;
 use JRP\Produto\Entity\Produto;
-use SebastianBergmann\Exporter\Exception;
 
 class ProdutoMapper extends MapperAbstract {
 
     public function read($id = null)
     {
-        $sql = "SELECT * FROM produtos" . (!is_null($id) ? " WHERE id = :id" : "");
-        $stmt = $this->em->getConnection()->prepare($sql);
-
-        if(!is_null($id))
-        {
-            $stmt->bindValue("id", $id, \PDO::PARAM_INT);
-        }
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $repo = $this->em
+                ->getRepository("JRP\Produto\Entity\Produto");
+        
+        return is_null($id) ? $repo->findAll() : $repo->find($id);
     }
 
     public function insert(Produto $produto)
@@ -28,7 +20,7 @@ class ProdutoMapper extends MapperAbstract {
         try {
             $this->em->persist($produto);
             $this->em->flush();
-        } catch(Exception $error) {
+        } catch(\Exception $error) {
             return [
                 'success' => false,
                 'msg' => 'Erro ao inserir produto!'
@@ -46,55 +38,22 @@ class ProdutoMapper extends MapperAbstract {
 
     public function update(Produto $produto)
     {
-        if(!$this->count($produto->getId()))
-        {
-            throw new Exception("Produto não encontrado!");
-        }
-
-        $this->em->getConnection()->update('produtos', [
-            'nome' => $produto->getNome(),
-            'descricao' => $produto->getDescricao(),
-            'valor' => $produto->getValor()
-        ], ['id' => $produto->getId()]);
+        $this->em->persist($produto);
+        $this->em->flush();
 
         return [
             'success' => true,
             'msg' => 'Produto atualizado com sucesso!'
         ];
-    }
-
-    public function updateColumn(array $data = array())
-    {
-        $id = $data['id'];
-        $column = $data['column'];
-        $value = $data['value'];
-
-        if($column == 'valor')
-        {
-            // Valor do produto
-            $value = str_replace('.', '', $value);
-            $value = floatval(str_replace(',', '.', $value));
-        }
-
-        $update = $this->em->getConnection()->update('produtos', [
-            $column => $value
-        ], ['id' => $id]);
-
-        if(!$update)
-        {
-            return ['success' => false];
-        }
-
-        return ['success' => true];
-    }
+    }    
 
     public function delete(Produto $produto)
     {
-        $produto = $this->em->find(get_class($produto), $produto->getId());
+        $produto = $this->read($produto->getId());
 
-        if(is_null($produto))
+        if(!$produto)
         {
-            throw new Exception("Nenhum produto encontrado com esse Id!");
+            throw new \Exception("Produto ID: {$produto->getId()} não encontrado");
         }
 
         $this->em->remove($produto);
@@ -104,11 +63,6 @@ class ProdutoMapper extends MapperAbstract {
             'success' => true,
             'msg' => 'Produto excluído com sucesso!'
         ];
-    }
-
-    public function count($id = null)
-    {
-        return count($this->read($id));
     }
 
 } 

@@ -16,11 +16,6 @@ class ProdutoService {
         $this->produto = $produto;
     }
 
-    public function count($id = null)
-    {
-        return $this->produtoMapper->count($id);
-    }
-
     public function read($id = null)
     {
         return $this->produtoMapper->read($id);
@@ -28,14 +23,12 @@ class ProdutoService {
 
     public function insert(array $data = array())
     {
-        $nome = $data['nome'];
         $valor = str_replace('.', '', $data['valor']);
         $valor = floatval(str_replace(',', '.', $valor));
-        $descricao = $data['descricao'];
 
-        $this->produto->setNome($nome);
+        $this->produto->setNome($data['nome']);
         $this->produto->setValor($valor);
-        $this->produto->setDescricao($descricao);
+        $this->produto->setDescricao($data['descricao']);
 
         return $this->produtoMapper->insert($this->produto);
     }
@@ -55,22 +48,9 @@ class ProdutoService {
         return $this->produtoMapper->update($this->produto);
     }
 
-    public function updateColumn(array $data = array())
-    {
-        $params = [
-            'id' => $data['pk'],
-            'column' => $data['name'],
-            'value' => $data['value']
-        ];
-
-        return $this->produtoMapper->updateColumn($params);
-    }
-
     public function delete($id)
     {
-        $id = (int) $id;
-
-        $this->produto->setId($id);
+        $this->produto->setId((int) $id);
 
         return $this->produtoMapper->delete($this->produto);
     }

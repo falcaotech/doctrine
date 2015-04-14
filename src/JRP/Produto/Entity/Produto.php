@@ -3,6 +3,7 @@
 namespace JRP\Produto\Entity;
 
 
+use JRP\Interfaces\EntityInterface;
 use JRP\Produto\Interfaces\ProdutoInterface;
 use Psr\Log\InvalidArgumentException;
 
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="produtos")
  */
 
-class Produto implements ProdutoInterface {
+class Produto implements EntityInterface, ProdutoInterface {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

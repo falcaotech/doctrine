@@ -3,6 +3,7 @@
 namespace JRP\Controllers;
 
 
+use JRP\Produto\Serializer\ProdutoSerializer;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
@@ -24,14 +25,14 @@ class ApiControllerProvider implements ControllerProviderInterface {
         {
             $produtos = $app['produtoService']->read();
 
-            return $app->json($produtos);
+            return $app->json($app['produtoSerializer']->serializeAll($produtos));
         });
 
         $controllers->get('/produtos/{id}', function($id) use ($app)
         {
             $produto = $app['produtoService']->read($id);
 
-            return $app->json($produto);
+            return $app->json($app['produtoSerializer']->serialize($produto));
         });
 
         $controllers->post('/produtos', function(Request $request) use ($app){

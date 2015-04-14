@@ -14,8 +14,11 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
 
 $app['produtoService'] = function() use ($em){
-    $produtoMapper = new \JRP\Produto\Mapper\ProdutoMapper($em);
-    $produtoService = new \JRP\Produto\Service\ProdutoService($produtoMapper, new \JRP\Produto\Entity\Produto());
+    $produtoService = new \JRP\Produto\Service\ProdutoService($em, new \JRP\Produto\Entity\Produto());
 
     return $produtoService;
+};
+
+$app['produtoSerializer'] = function() {
+    return new \JRP\Produto\Serializer\ProdutoSerializer();
 };

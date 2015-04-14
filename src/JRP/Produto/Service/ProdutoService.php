@@ -2,23 +2,24 @@
 
 namespace JRP\Produto\Service;
 
+use Doctrine\ORM\EntityManager;
 use JRP\Produto\Entity\Produto;
-use JRP\Produto\Mapper\ProdutoMapper;
 
 class ProdutoService {
 
-    private $produtoMapper;
     private $produto;
 
-    public function __construct(ProdutoMapper $produtoMapper, Produto $produto)
+    public function __construct(EntityManager $em, Produto $produto)
     {
-        $this->produtoMapper = $produtoMapper;
+        $this->em = $em;
         $this->produto = $produto;
     }
 
     public function read($id = null)
     {
-        return $this->produtoMapper->read($id);
+        $repo = $this->em->getRepository("JRP\Produto\Entity\Produto");
+
+        return is_null($id) ? $repo->findAll() : $repo->find($id);
     }
 
     public function insert(array $data = array())
@@ -30,7 +31,23 @@ class ProdutoService {
         $this->produto->setValor($valor);
         $this->produto->setDescricao($data['descricao']);
 
-        return $this->produtoMapper->insert($this->produto);
+        try {
+            $this->em->persist($this->produto);
+            $this->em->flush();
+        } catch(\Exception $error) {
+            return [
+                'success' => false,
+                'msg' => 'Erro ao inserir produto!'
+            ];
+        }
+
+        return [
+            'success' => true,
+            'msg' => 'Produto inserido com sucesso!',
+            'produto' => [
+                'id' => $this->produto->getId()
+            ]
+        ];
     }
 
     public function update(array $data = array())
@@ -45,14 +62,33 @@ class ProdutoService {
         $this->produto->setValor($valor);
         $this->produto->setDescricao($descricao);
 
-        return $this->produtoMapper->update($this->produto);
+        $this->em->persist($this->produto);
+        $this->em->flush();
+
+        return [
+            'success' => true,
+            'msg' => 'Produto atualizado com sucesso!'
+        ];
     }
 
     public function delete($id)
     {
         $this->produto->setId((int) $id);
 
-        return $this->produtoMapper->delete($this->produto);
+        $produto = $this->read($this->produto->getId());
+
+        if(!$produto)
+        {
+            throw new \Exception("Produto ID: {$produto->getId()} não encontrado");
+        }
+
+        $this->em->remove($produto);
+        $this->em->flush();
+
+        return [
+            'success' => true,
+            'msg' => 'Produto excluído com sucesso!'
+        ];
     }
 
 } 

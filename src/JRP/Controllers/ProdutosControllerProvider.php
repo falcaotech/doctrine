@@ -22,7 +22,8 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
 
         $controllers->get('/', function() use ($app)
         {
-            $produtos = $app['produtoService']->read();
+            $data = $app['produtoService']->read();
+            $produtos = $app['produtoSerializer']->serializeAll($data);
 
             return $app['twig']->render('produtos/listagem.twig', ['produtos' => $produtos]);
         })->bind('produtos');
@@ -36,7 +37,7 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
 
         $controllers->get('/listagem', function() use ($app)
         {
-            $produtos = $app['produtoService']->read();
+            $produtos = $app['produtoSerializer']->serializeAll($app['produtoService']->read());
 
             return $app->json($produtos);
         });

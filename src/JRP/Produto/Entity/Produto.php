@@ -22,15 +22,15 @@ class Produto implements EntityInterface, ProdutoInterface {
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nome;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descricao;
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $valor;
 

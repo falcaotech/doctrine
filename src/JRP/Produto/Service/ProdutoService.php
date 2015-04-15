@@ -99,7 +99,7 @@ class ProdutoService {
             $data['value'] = $this->stringToMoney($data['value']);
         }
 
-        $entity = $this->read($id);
+        $entity = $this->em->getReference("JRP\Produto\Entity\Produto", $id);
         $entity->{"set".ucfirst($column)}($data['value']);
 
         $this->em->merge($entity);

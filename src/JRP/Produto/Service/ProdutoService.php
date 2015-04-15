@@ -54,13 +54,13 @@ class ProdutoService {
     {
         $id = $data['id'];
 
-        $entity = $this->read($id);
+        $entity = $this->em->getReference("JRP\Produto\Entity\Produto", $id);
 
         $entity->setNome($data['nome']);
         $entity->setDescricao($data['descricao']);
         $entity->setValor($this->stringToMoney($data['valor']));
 
-        $this->em->merge($entity);
+        $this->em->persist($entity);
         $this->em->flush();
 
         return [

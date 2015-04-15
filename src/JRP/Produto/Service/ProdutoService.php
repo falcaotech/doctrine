@@ -113,9 +113,7 @@ class ProdutoService {
 
     public function delete($id)
     {
-        $this->produto->setId((int) $id);
-
-        $produto = $this->read($this->produto->getId());
+        $produto = $this->em->getReference("JRP\Produto\Entity\Produto", $id);
 
         if(!$produto)
         {

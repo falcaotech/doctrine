@@ -27,7 +27,7 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
 
             $data = [
                 'totalResults' => $getProdutos['totalResults'],
-                'currentPage' => $getProdutos['currentPage'],
+                'currentPage' => ($getProdutos['currentPage'] + 1),
                 'totalPages' => $getProdutos['totalPages'],
                 'produtos' => $produtos
             ];

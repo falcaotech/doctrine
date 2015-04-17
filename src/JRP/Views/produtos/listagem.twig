@@ -45,6 +45,18 @@
                 </tr>
                 </tfoot>
             </table>
+
+            {% if totalPages > 0 %}
+                <hr>
+                <ul class="pager">
+                    {% if totalPages > 1 and currentPage > 1 %}
+                        <li class="previous"><a href="/produtos/?p={{ currentPage - 1 }}">Anterior</a></li>
+                    {% endif %}
+                    {% if totalPages > 2 %}
+                        <li class="next"><a href="/produtos/?p={{ currentPage + 1 }}">Próximo</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
         {% else %}
             Nenhum produto cadastrado no banco de dados / produto não encontrado.
             <hr>

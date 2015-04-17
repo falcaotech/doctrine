@@ -6,11 +6,6 @@ use Doctrine\ORM\EntityManager;
 use JRP\Produto\Entity\Produto;
 use JRP\Util\MoneyFormatter;
 
-/**
- * @ORM\Entity(repositoryClass="JRP\Produto\Entity\ProdutoRepository")
- * @ORM\Table(name="produtos")
- */
-
 class ProdutoService {
 
     use MoneyFormatter;
@@ -23,9 +18,14 @@ class ProdutoService {
         $this->produto = $produto;
     }
 
-    public function read($id = null)
+    public function read($id = null, $nome = null)
     {
         $repo = $this->em->getRepository("JRP\Produto\Entity\Produto");
+
+        if(!is_null($nome))
+        {
+            return $repo->searchByName($nome);
+        }
 
         return is_null($id) ? $repo->getProdutosOrdenados() : $repo->find($id);
     }

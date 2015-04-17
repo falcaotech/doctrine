@@ -10,7 +10,7 @@ use Psr\Log\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JRP\Produto\Entity\ProdutoRepository")
  * @ORM\Table(name="produtos")
  */
 

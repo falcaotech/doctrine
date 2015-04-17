@@ -15,6 +15,17 @@
                 <th>Ações</th>
             </tr>
             </thead>
+            <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <th>{{ produto.id }}</th>
+                <th><a href="#" class="editable-field" id="nome" data-type="text" data-pk="{{ produto.id }}" data-title="Nome">{{ produto.nome }}</a></th>
+                <th><a href="#" class="editable-field" id="descricao" data-type="textarea" data-pk="{{ produto.id }}" data-title="Descrição">{{ produto.descricao }}</a></th>
+                <th>R$ <a href="#" class="editable-field-money mask-money" id="valor" data-type="text" data-pk="{{ produto.id }}" data-title="Valor">{{ produto.valor }}</a></th>
+                <th><a href="/produtos/excluir/{{ produto.id }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a></th>
+            </tr>
+            {% endfor %}
+            </tbody>
             <tfoot>
             <tr>
                 <th></th>

@@ -22,9 +22,17 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
 
         $controllers->get('/', function() use ($app)
         {
-            $produtos = $app['produtoSerializer']->serializeAll($app['produtoService']->read());
+            $getProdutos = $app['produtoService']->read();
+            $produtos = $app['produtoSerializer']->serializeAll($getProdutos);
 
-            return $app['twig']->render('produtos/listagem.twig', ['produtos' => $produtos]);
+            $data = [
+                'totalResults' => $getProdutos['totalResults'],
+                'currentPage' => $getProdutos['currentPage'],
+                'totalPages' => $getProdutos['totalPages'],
+                'produtos' => $produtos
+            ];
+
+            return $app['twig']->render('produtos/listagem.twig', $data);
         })->bind('produtos');
 
         $controllers->post('/', function(\Symfony\Component\HttpFoundation\Request $request) use ($app)
@@ -33,14 +41,7 @@ class ProdutosControllerProvider implements ControllerProviderInterface {
 
             return $app->json($app['produtoService']->insert($dados));
         });
-
-        $controllers->get('/listagem', function() use ($app)
-        {
-            $produtos = $app['produtoSerializer']->serializeAll($app['produtoService']->read());
-
-            return $app->json($produtos);
-        });
-
+        
         $controllers->post('/atualizar', function(\Symfony\Component\HttpFoundation\Request $request) use ($app) {
             $dados = $request->request->all();
 

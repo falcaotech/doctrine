@@ -5,10 +5,12 @@ namespace JRP\Produto\Service;
 use Doctrine\ORM\EntityManager;
 use JRP\Produto\Entity\Produto;
 use JRP\Util\MoneyFormatter;
+use JRP\Util\PaginatorTrait;
 
 class ProdutoService {
 
     use MoneyFormatter;
+    use PaginatorTrait;
 
     private $produto;
 
@@ -18,16 +20,16 @@ class ProdutoService {
         $this->produto = $produto;
     }
 
-    public function read($id = null, $nome = null)
+    public function read($id = null)
     {
         $repo = $this->em->getRepository("JRP\Produto\Entity\Produto");
 
-        if(!is_null($nome))
+        if(!is_null($this->getSearchParam()))
         {
-            return $repo->searchByName($nome);
+           return $repo->searchByName($this->getSearchParam(), $this->getPage());
         }
 
-        return is_null($id) ? $repo->getProdutosOrdenados() : $repo->find($id);
+        return is_null($id) ? $repo->getProdutos($this->getPage()) : $repo->find($id);
     }
 
     public function insert(array $data = array())

@@ -5,42 +5,48 @@
 {% block conteudo %}
         {% if produtos|length > 0 %}
             {% include 'produtos/modal/cadastrar.twig' %}
+            <form class="form-inline" method="GET" action="">
+                <div class="form-group">
+                    <input type="text" name="s" class="form-control" id="busca" placeholder="Buscar por nome...">
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+            </form>
             <table id="table-produtos">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for produto in produtos %}
-            <tr>
-                <th>{{ produto.id }}</th>
-                <th><a href="#" class="editable-field" id="nome" data-type="text" data-pk="{{ produto.id }}" data-title="Nome">{{ produto.nome }}</a></th>
-                <th><a href="#" class="editable-field" id="descricao" data-type="textarea" data-pk="{{ produto.id }}" data-title="Descrição">{{ produto.descricao }}</a></th>
-                <th>R$ <a href="#" class="editable-field-money mask-money" id="valor" data-type="text" data-pk="{{ produto.id }}" data-title="Valor">{{ produto.valor }}</a></th>
-                <th><a href="/produtos/excluir/{{ produto.id }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a></th>
-            </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
-                        <span class="glyphicon glyphicon-plus"></span> Novo produto
-                    </button>
-                </th>
-            </tr>
-            </tfoot>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <th>{{ produto.id }}</th>
+                    <th><a href="#" class="editable-field" id="nome" data-type="text" data-pk="{{ produto.id }}" data-title="Nome">{{ produto.nome }}</a></th>
+                    <th><a href="#" class="editable-field" id="descricao" data-type="textarea" data-pk="{{ produto.id }}" data-title="Descrição">{{ produto.descricao }}</a></th>
+                    <th>R$ <a href="#" class="editable-field-money mask-money" id="valor" data-type="text" data-pk="{{ produto.id }}" data-title="Valor">{{ produto.valor }}</a></th>
+                    <th><a href="/produtos/excluir/{{ produto.id }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Excluir</a></th>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
+                            <span class="glyphicon glyphicon-plus"></span> Novo produto
+                        </button>
+                    </th>
+                </tr>
+                </tfoot>
             </table>
         {% else %}
-            Nenhum produto cadastrado no banco de dados!
+            Nenhum produto cadastrado no banco de dados / produto não encontrado.
             <hr>
             Veja como funciona a <a href="https://github.com/walterjrp/doctrine" target="_blank">API REST</a> para o cadastro dos produtos!
         {% endif %}

@@ -19,11 +19,13 @@ class ProdutoSerializer implements SerializerInterface {
         ];
     }
 
-    public function serializeAll(array $entitiesArray = array())
+    public function serializeAll($entities)
     {
+        $entities = isset($entities['results']) ? $entities['results'] : $entities;
+
         $data = [];
 
-        foreach($entitiesArray as $entity)
+        foreach($entities as $entity)
         {
             array_push($data, [
                 'id' => $entity->getId(),

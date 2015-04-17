@@ -9,22 +9,30 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class ProdutoRepository extends EntityRepository
 {
 
-    public function getProdutosOrdenados()
+    public function countProdutos()
     {
-        return $this->createQueryBuilder("p")
-                    ->orderBy('p.nome', 'asc')
-                    ->getQuery()
-                    ->getResult();
+        $query = $this->createQueryBuilder("p")->getQuery()->getResult();
+
+        return count($query);
     }
 
-    public function getProdutosDesc()
+    public function getProdutos($page = 0, $limit = 5)
     {
-        $dql = "SELECT p FROM JRP\Produto\Entity\Produto p
-        ORDER BY p.nome DESC";
+        $query =  $this->createQueryBuilder("p")
+                    ->orderBy('p.id', 'desc')
+                    ->getQuery()
+                    ->setFirstResult($page)
+                    ->setMaxResults($limit);
 
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->getResult();
+        $results = new Paginator($query);
+        $totalResults = count($results);
+
+        return [
+            'totalResults' => $totalResults,
+            'currentPage' => $page,
+            'totalPages' => ceil($totalResults / $limit),
+            'results' => $results
+        ];
     }
 
     public function searchByName($param, $page = 0, $limit = 5)

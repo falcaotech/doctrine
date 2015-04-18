@@ -35,6 +35,12 @@ class Produto implements EntityInterface, ProdutoInterface {
     private $valor;
 
     /**
+     * @ORM\OneToOne(targetEntity="JRP\Produto\Entity\ProdutoCategoria")
+     * @ORM\JoinColumn(name="produto_categoria", referencedColumnName="id")
+     **/
+    private $produto_categoria;
+
+    /**
      * @return mixed
      */
     public function getDescricao()
@@ -111,6 +117,22 @@ class Produto implements EntityInterface, ProdutoInterface {
         }
 
         $this->valor = $valor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProdutoCategoria()
+    {
+        return $this->produto_categoria;
+    }
+
+    /**
+     * @param mixed $produto_categoria
+     */
+    public function setProdutoCategoria($produto_categoria)
+    {
+        $this->produto_categoria = $produto_categoria;
     }
 
 } 

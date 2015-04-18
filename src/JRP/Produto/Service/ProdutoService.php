@@ -4,6 +4,7 @@ namespace JRP\Produto\Service;
 
 use Doctrine\ORM\EntityManager;
 use JRP\Produto\Entity\Produto;
+use JRP\Produto\Entity\ProdutoCategoria;
 use JRP\Util\MoneyFormatter;
 use JRP\Util\PaginatorTrait;
 
@@ -37,6 +38,12 @@ class ProdutoService {
         $this->produto->setNome($data['nome']);
         $this->produto->setValor($this->stringToMoney($data['valor']));
         $this->produto->setDescricao($data['descricao']);
+
+        if(isset($data['categoria']))
+        {
+            $categoria = $this->em->getReference("JRP\Produto\Entity\ProdutoCategoria", $data['categoria']);
+            $this->produto->setProdutoCategoria($categoria);
+        }
 
         try {
             $this->em->persist($this->produto);

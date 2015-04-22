@@ -52,6 +52,12 @@ class ApiControllerProvider implements ControllerProviderInterface {
             return $app->json($app['produtoService']->delete($id));
         });
 
+        $controllers->post('/tags', function(Request $request) use ($app){
+            $dados = $request->request->all();
+
+            return $app->json($app['tagService']->insert($dados));
+        });
+
         return $controllers;
     }
 

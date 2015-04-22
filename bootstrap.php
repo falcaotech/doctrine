@@ -22,3 +22,9 @@ $app['produtoService'] = function() use ($em){
 $app['produtoSerializer'] = function() {
     return new \JRP\Produto\Serializer\ProdutoSerializer();
 };
+
+$app['tagService'] = function() use($em){
+    $tagService = new \JRP\Produto\Service\TagService($em, new \JRP\Produto\Entity\Tags());
+
+    return $tagService;
+};

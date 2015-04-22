@@ -3,6 +3,7 @@
 namespace JRP\Produto\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JRP\Interfaces\EntityInterface;
 use JRP\Produto\Interfaces\ProdutoInterface;
 use Psr\Log\InvalidArgumentException;
@@ -39,6 +40,20 @@ class Produto implements EntityInterface, ProdutoInterface {
      * @ORM\JoinColumn(name="produto_categoria", referencedColumnName="id")
      **/
     private $produto_categoria;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="JRP\Produto\Entity\Tags")
+     * @ORM\JoinTable(name="produtos_tags",
+     *      joinColumns={@ORM\JoinColumn(name="produto_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     *      )
+     */
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -133,6 +148,22 @@ class Produto implements EntityInterface, ProdutoInterface {
     public function setProdutoCategoria($produto_categoria)
     {
         $this->produto_categoria = $produto_categoria;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function addTag($tag)
+    {
+        $this->tags->add($tag);
     }
 
 } 

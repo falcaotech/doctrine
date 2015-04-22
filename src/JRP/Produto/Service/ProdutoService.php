@@ -45,13 +45,22 @@ class ProdutoService {
             $this->produto->setProdutoCategoria($categoria);
         }
 
+        if(isset($data['tag']))
+        {
+            foreach($data['tag'] as $tagId)
+            {
+                $tagEntity = $this->em->getReference("JRP\Produto\Entity\Tags", $tagId);
+                $this->produto->addTag($tagEntity);
+            }
+        }
+
         try {
             $this->em->persist($this->produto);
             $this->em->flush();
         } catch(\Exception $error) {
             return [
                 'success' => false,
-                'msg' => 'Erro ao inserir produto!'
+                'msg' => 'Erro ao inserir produto! Erro: ' . $error->getMessage()
             ];
         }
 
